@@ -1,25 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
-import PopupHistory1 from "../images/svgPopup/PopupHistory.svg";
+import PopupBGTopStar from "../images/svgPopup/PopupHistory.svg";
 import IconX from "../images/svgPopup/IconX.svg";
 
 import "./styles.css";
 import { callApi, mainUrl } from "../util/api/requestUtils";
-import { prizes } from "../App";
 import { useTranslation } from "react-i18next";
 import gui from "../util/gui";
-import moment from "moment";
 
-const formatDate = (dateString) => {
-  return moment(dateString).format('DD/MM/YYYY,HH:mm:ss');
-};
-
-const PopupHistory = ({ onClose}) => {
+const PopupTopStar = ({ onClose}) => {
   const [tab, setTab] = useState(1);
   const { t } = useTranslation();
   const [dataTab1, setDataTab1] = useState([]);
-
+  const topNumber = 3;
   useEffect(() => {
     fetchData();
   },[]);
@@ -27,10 +21,9 @@ const PopupHistory = ({ onClose}) => {
 
   const fetchData = async () => {
     try {
-
-      const url = mainUrl + "/api/lucky/history"
-      const res = await callApi(url, "POST", {});
-      console.log("ccc",res)
+      const params = '?'+ new URLSearchParams({topNumber}).toString();  
+      const url = mainUrl + "/api/top"+params
+      const res = await callApi(url, "GET", {});
       setDataTab1(res || []);
     } catch (error) {
       console.log("error", error);
@@ -70,7 +63,7 @@ const PopupHistory = ({ onClose}) => {
               color: "#4C2626",
             }}
           >
-            {t("History")}
+            {t("Rank")}
           </div>
 
           <div
@@ -101,7 +94,7 @@ const PopupHistory = ({ onClose}) => {
                       : "linear-gradient(180deg, #EEEEEE 9.09%, #D6D4D4 49.12%, #EEEEEE 92.3%)",
                 }}
               >
-                {t("Prize")}
+                {t("Top Star")}
               </div>
             </div>
             <>
@@ -116,8 +109,8 @@ const PopupHistory = ({ onClose}) => {
                   }}
                 >
                   <div>{t("No.")}</div>
-                  <div style={{ marginRight: 80 }}> {t("Prize")}</div>
-                  <div>{t("Date/Time")}</div>
+                  <div style={{ marginRight: 80 }}> {t("Username")}</div>
+                  <div>{t("Star")}</div>
                 </div>
                 <div
                   style={{
@@ -127,10 +120,7 @@ const PopupHistory = ({ onClose}) => {
                   }}
                 >
                   {dataTab1.map((item, index) => {
-                    if(item == null || item.gift == null) return null;
-                    const foundIcon = prizes.find((o) =>
-                      o.giftCode.find((e) => e === item.gift.id)
-                    );
+                    if(item == null) return null;
                     return (
                       <div
                         key={index.toString()}
@@ -149,33 +139,38 @@ const PopupHistory = ({ onClose}) => {
                       >
                         <div className="ct-flex-row">
                           <div>{index + 1}</div>
-                          <img
-                            style={{
-                              width: 15,
-                              height: 15,
-                              marginLeft: 12,
-                              marginRight: 6,
-                            }}
-                            src={foundIcon?.img}
-                          />
-                          <div title={item.gift.name}>
-                            {item.gift.name.length > 10 
-                              ? `${item.gift.name.substring(0, 10)}...` 
-                              : item.gift.name}
-                          </div>
                         </div>
-                        <div>{formatDate(item.addTime)}</div>
+                        <div>{item.username}</div>
+                        <div title={item.totalStar}>
+                            {(
+                                () => {
+                                const str = item.totalStar.toString();
+                                if (str.length > 6) {
+                                  return `${str.substring(0, 6)}M`;
+                                }
+                                if (
+                                    str.length <= 6 &&
+                                    str.length > 3
+                                ) {
+                                  return `${str.substring(0, 3)}K`;
+                                }
+                                if (str.length <= 3) {
+                                  return str;
+                                }
+                                } 
+                            )()}
+                          </div>
                       </div>
                     );
                   })}
                 </div>
               </>
           </div>
-          <img className="" style={{}} src={PopupHistory1} />
+          <img className="" style={{}} src={PopupBGTopStar} />
         </div>
       </div>
     </>
   );
 };
 
-export default PopupHistory;
+export default PopupTopStar;

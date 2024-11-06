@@ -17,9 +17,9 @@ export function callApi(url, method, data = {}) {
       Authorization:  `Bearer ${token}`,
     } : {}
   }).catch((e) => {
-    console.log("error", e);
-    localStorage.setItem("token", "");
-    if(token)
-      return (window.location.reload());
+    console.log("requestUitl-error", JSON.stringify(e.message));
+    // localStorage.setItem("token", "");
+    // if(token)
+    //   return (window.location.reload());
   });
 }

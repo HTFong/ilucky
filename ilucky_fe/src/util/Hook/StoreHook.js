@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 const initialState = {
-  userInfo: "abc",
+  userInfo: "abc",       //them userdetail
 };
 const store = createContext(initialState);
 const { Provider } = store;

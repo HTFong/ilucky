@@ -31,7 +31,6 @@ public class LuckyController {
     @PostMapping("/play")
     public ResponseEntity<?> play(@AuthenticationPrincipal UserDetails userDetails) {
         try {
-
             if(userDetails != null) {
                 User user = userService.findByUserName(userDetails.getUsername());
 

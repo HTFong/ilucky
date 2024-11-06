@@ -27,9 +27,10 @@ public class UserDTO {
     @JsonProperty("isWin")
     private boolean isWin;
     
-    
+    private String username;
     public UserDTO(User user) {
         this.id = user.getId();
+        this.username = user.getUsername();
         this.addTime = user.getAddTime();
         this.totalPlay = user.getTotalPlay();
         this.totalStar = user.getTotalStar();

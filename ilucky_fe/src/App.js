@@ -9,6 +9,8 @@ import Background from "./images/free/bg1.png";
 import Vongquay from "./images/free/Vongquay.png";
 import HieuUngSao from "./images/free/HieuUngSao.png";
 import IconKimQuay from "./images/icon/IconKimQuay.svg";
+import IconEN from "./images/icon/IconEN.svg";
+import IconVI from "./images/icon/IconVI.svg";
 import IconLoa from "./images/icon/IconLoa.svg";
 import IconLoaTat from "./images/icon/IconLoaTat.svg";
 import bangdon from "./images/icon/bangdon.svg";
@@ -19,6 +21,10 @@ import IconVuongMieng from "./images/svg/IconVuongMieng.svg";
 import IconTui from "./images/svg/IconTui.svg";
 import IconSach from "./images/svg/IconSach.svg";
 import logout from "./images/svg/logout.svg";
+import IconFree from "./images/svg/IconFree.svg";
+import IconLogin from "./images/svg/IconLogin.svg";
+import IconRegister from "./images/svg/IconRegister.svg";
+import IconDeposit from "./images/svg/IconDeposit.svg";
 import { callApi, mainUrl } from "./util/api/requestUtils";
 import React from "react";
 import Icon1 from "./images/svgquatang/icon1.svg";
@@ -31,12 +37,19 @@ import mp3Main from "./mp3/lucky_spin.mp3";
 import mp3Done from "./mp3/lucky_done.mp3";
 import PopupQua from "./components/PopupQua";
 import PopupHistory from "./components/PopupHistory";
+import PopupTopStar from "./components/PopupTopStar";
 import ViewText from "./components/ViewText";
 import PopupHuongDan from "./components/PopupHuongDan";
 import PopupBuyTurn from "./components/PopupBuyTurn";
 import { useTranslation } from "react-i18next";
 import "./util/i18n";
+import PopupLogin from "./components/PopupLogin";
+import PopupRegister from "./components/PopupRegister";
+import PopupDeposit from "./components/PopupDeposit";
+import PopupGetFreeTurn from "./components/PopupGetFreeTurn";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const prizes = [
   {
     text: "Share",
@@ -101,8 +114,8 @@ const convertStringToArray = (str) => {
 const App = () => {
   const paramsArray = window.location.search
     ? convertStringToArray(
-      window.location.search.slice(1, window.location.search.length)
-    )
+        window.location.search.slice(1, window.location.search.length)
+      )
     : [];
 
   const languageUrl = paramsArray.find((o) => o.type === "lang")?.value || "VI";
@@ -110,11 +123,18 @@ const App = () => {
 
   const [tokenState, setTokenState] = useState(tokenLocal);
 
+  const [isLogin, setIsLogin] = useState(false);
+  const [isEN, setIsEN] = useState(false);
   const [isMute, setIsMute] = useState(false);
   const [showQua, setShowQua] = useState(false);
   const [ItemTrungThuong, setItemTrungThuong] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const [showTopStar, setShowTopStar] = useState(false);
   const [showHuongDan, setShowHuongDan] = useState(false);
+  const [showDangNhap, setShowDangNhap] = useState(false);
+  const [showDangKi, setshowDangKi] = useState(false);
+  const [showNaptien, setShowNaptien] = useState(false);
+  const [showGetFreeTurn, setShowGetFreeTurn] = useState(false);
   const [countPlayTurn, setCountPlayTurn] = useState(0);
 
   const [buyMore, setBuyMore] = useState(false);
@@ -125,13 +145,41 @@ const App = () => {
   const audioRef = useRef(null);
   const audioDoneRef = useRef(null);
 
+  const timeout = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   useEffect(() => {
-    if(tokenLocal) {
-      setTokenState(tokenLocal);
-      wsGetLuckyPlayTurn();
+    if (messageError) {
+      toast(t(messageError));
+      setMessageError("");
     }
   });
-  
+
+  useEffect(() => {
+    if(tokenLocal) {
+      let isCancelled = false;
+      const handleChange = async () => {
+        await timeout(5000);
+        if (!isCancelled) {
+          setTokenState(tokenLocal);
+          wsGetLuckyPlayTurn();
+        }
+      };
+      handleChange();
+      return () => {
+        isCancelled = true;
+      };
+    }
+  });
+
+  // useEffect(() => {
+  //   if (tokenLocal) {
+  //     setTokenState(tokenLocal);
+  //     wsGetLuckyPlayTurn();
+  //   }
+  // });
+
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(mp3Main);
@@ -144,22 +192,28 @@ const App = () => {
   }, [isMute]);
 
   useEffect(() => {
+    i18n.changeLanguage(isEN ? "EN" : "VI");
+  }, [isEN]);
+
+  useEffect(() => {
     i18n.changeLanguage(languageUrl || "VI");
   }, [languageUrl]);
 
-  
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   // Lấy số lượt chơi đang có
   const wsGetLuckyPlayTurn = async () => {
     try {
       const url = mainUrl + "/api/user/info";
       const res = await callApi(url, "POST", {});
-      const { totalPlay } = res;
-      if (res) {
+      const { totalPlay } = res.status === "200" ? res.data : null;
+      if (res.status === "200") {
         setCountPlayTurn(totalPlay || 0);
+        setIsLogin(true);
+      } else {
+        setMessageError(res.message);
       }
     } catch (error) {
       console.log("error", error);
@@ -176,14 +230,12 @@ const App = () => {
       getPrize: async function (callback) {
         audioRef.current.play();
         try {
-          const url = mainUrl + "/api/lucky/play"
+          const url = mainUrl + "/api/lucky/play";
           const res = await callApi(url, "POST", {});
           const { gift } = res;
           const found =
             gift.id &&
-            prizes.find((o) =>
-              o.giftCode.find((k) => k === gift.id)
-            );
+            prizes.find((o) => o.giftCode.find((k) => k === gift.id));
           setItemTrungThuong({
             ...res,
             ...found,
@@ -195,7 +247,8 @@ const App = () => {
             alert("Hết lượt quay");
           }
         } catch (error) {
-          console.log("error", error);
+          console.log("quay-error", error);
+          setMessageError("OutOfTurn")
         }
       },
       gotBack: function (data) {
@@ -237,6 +290,7 @@ const App = () => {
         backgroundSize: "cover",
       }}
     >
+      <ToastContainer />
       <img
         onClick={() => {
           setIsMute((v) => !v);
@@ -249,6 +303,19 @@ const App = () => {
           zIndex: 2,
         }}
         src={!isMute ? IconLoa : IconLoaTat}
+      />
+      <img
+        onClick={() => {
+          setIsEN((v) => !v);
+        }}
+        style={{
+          position: "absolute",
+          right: 40,
+          top: 60,
+          cursor: "pointer",
+          zIndex: 2,
+        }}
+        src={isEN ? IconEN : IconVI}
       />
       <div
         style={{
@@ -329,7 +396,7 @@ const App = () => {
             bottom: -160,
             fontSize: 14,
             fontWeight: "bold",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           {t("you have")} {t("turns")} {countPlayTurn}
@@ -355,25 +422,63 @@ const App = () => {
           <div className="ct-flex-col">
             <ItemOption
               icon={IconSach}
+              onClick={(v) => setShowTopStar(true)}
+              text={t("TopPlayer")}
+            />
+            <ItemOption
+              icon={IconSach}
               onClick={(v) => setShowHistory(true)}
               text={t("History")}
             />
-            <ItemOption
-              onClick={
-                () => setBuyMore(true)
-              }
-              icon={IconTui}
-              text={t("Buy more turn")}
-            />
+
+            {isLogin ? (
+              <>
+                <ItemOption
+                  onClick={() => setBuyMore(true)}
+                  icon={IconTui}
+                  text={t("Buy more turn")}
+                />
+                <ItemOption
+                  onClick={(v) => setShowNaptien(true)}
+                  icon={IconDeposit}
+                  text={t("Deposit")}
+                />
+              </>
+            ) : null}
           </div>
           <div className="ct-flex-col">
-            {/* <ItemOption icon={IconFree} /> */}
             <ItemOption
               onClick={(v) => setShowHuongDan(true)}
               icon={IconVuongMieng}
               text={t("Gift")}
             />
-            <ItemOption onClick={onLogout} text={t("Logout")} icon={logout} />
+            {isLogin ? (
+              <>
+                <ItemOption
+                  onClick={(v) => setShowGetFreeTurn(true)}
+                  icon={IconFree}
+                  text={t("Dailyfree")}
+                />
+                <ItemOption
+                  onClick={onLogout}
+                  icon={logout}
+                  text={t("Logout")}
+                />
+              </>
+            ) : (
+              <>
+                <ItemOption
+                  onClick={(v) => setshowDangKi(true)}
+                  icon={IconRegister}
+                  text={t("Register")}
+                />
+                <ItemOption
+                  onClick={(v) => setShowDangNhap(true)}
+                  icon={IconLogin}
+                  text={t("Login")}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -389,25 +494,68 @@ const App = () => {
         <PopupBuyTurn
           onClose={() => setBuyMore(false)}
           onSuccess={(e) => {
-            setBuyMore(false);
-            if (e.status == "0") {
-              setMessageError("Bạn đã mua thêm lượt thành công.");
+            //setBuyMore(false);
+            if (e) {
+              setMessageError("BuyTurnSucceed");
             } else {
-              setMessageError(e.message)
+              setMessageError("BuyTurnFail");
             }
           }}
         />
       ) : null}
 
+      {showTopStar ? (
+        <PopupTopStar onClose={() => setShowTopStar(false)} />
+      ) : null}
       {showHistory ? (
-        <PopupHistory
-          onClose={() => setShowHistory(false)}
-        />
+        <PopupHistory onClose={() => setShowHistory(false)} />
       ) : null}
       {showHuongDan ? (
-        <PopupHuongDan
-          onClose={() => setShowHuongDan(false)}
+        <PopupHuongDan onClose={() => setShowHuongDan(false)} />
+      ) : null}
+
+      {showDangNhap ? (
+        <PopupLogin
+          onClose={() => setShowDangNhap(false)}
+          onSuccess={(e) => {
+            if (e) {
+              setShowDangNhap(false);
+              setMessageError("LoginSucceed");
+              setIsLogin(true);
+            } else {
+              setMessageError("LoginFail");
+            }
+          }}
         />
+      ) : null}
+      {showDangKi ? (
+        <PopupRegister
+          onClose={() => setshowDangKi(false)}
+          onSuccess={(e) => {
+            setshowDangKi(false);
+            if (e) {
+              setMessageError("RegisterSucceed");
+            } else {
+              setMessageError("RegisterFail");
+            }
+          }}
+        />
+      ) : null}
+      {showNaptien ? (
+        <PopupDeposit
+          onClose={() => setShowNaptien(false)}
+          onSuccess={(e) => {
+            // setShowNaptien(false);
+            if (e.status === "200") {
+              setMessageError("PressClickPayment");
+            } else {
+              setMessageError("BankingCauseError");
+            }
+          }}
+        />
+      ) : null}
+      {showGetFreeTurn ? (
+        <PopupGetFreeTurn onClose={() => setShowGetFreeTurn(false)} />
       ) : null}
     </div>
   );

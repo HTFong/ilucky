@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/alt-text */
+
 import React, {useState} from "react";
-import PopupOTP from "../images/svgPopup/PopupCancel.svg";
+import PopupBGLogin from "../images/svgPopup/PopupLogin.svg";
 import IconX from "../images/svgPopup/IconX.svg";
 
 import "./styles.css";
@@ -10,25 +8,25 @@ import { callApi, mainUrl } from "../util/api/requestUtils";
 import { useTranslation } from "react-i18next";
 import gui from "../util/gui";
 
-const PopupBuyTurn = ({ onClose, onSuccess}) => {
-  const perTurn = 5
-  const turnCost = 5000
-  const [turnBuy, setTurnBuy] = useState(perTurn);
+const PopupLogin = ({ onClose, onSuccess}) => {
   const { t } = useTranslation();
   const [disabled, setDisabled] = useState(false);
+  const [username,setUsername] = useState("")
+  const [password,setPassword] = useState("")
 
   const onSubmit = async () => {
     // onClose();
     setDisabled(true);
     try {
-      const url = mainUrl + "/api/mps/charge";
-      const res = await callApi(url, "POST", {turnCost,perTurn,turnBuy});
-      if (res.status === "200") {
+      const url = mainUrl + "/api/auth/login";
+      const res = await callApi(url, "POST", {username,password});
+      if (res.status ==="200") {
+        localStorage.setItem("token", res.data.accessToken);
         onSuccess(res);
       }
-    } catch (error) {
-      console.log("buyturn-error", JSON.stringify(error));
-      onSuccess();
+    } catch (error) { //res undifined
+      console.log("login-error", JSON.stringify(error));
+      onSuccess()
     }
   };
 
@@ -66,23 +64,24 @@ const PopupBuyTurn = ({ onClose, onSuccess}) => {
               textAlign: "center"
             }}
           >
-            Gura
+            {t("Login")}
           </div>
           <div
             style={{
               position: "absolute",
-              height: 130,
+              height: 190,
               width: "88%",
-              top: 24,
-              left: 8,
-              padding: "24px 16px 0 16px",
+              top: 26,
+              left: 4,
+              padding: "30px 16px 16px 16px" ,
               justifyContent: "center",
             }}
             className="ct-flex-col"
           >
+            <div>{t("Username")}</div>
             <div
               style={{
-                width: 118,
+                width: 300,
                 height: 33,
                 border: "1px solid #B46C6C",
                 backgroundColor: "#FFF",
@@ -92,27 +91,44 @@ const PopupBuyTurn = ({ onClose, onSuccess}) => {
               }}
               className="ct-flex-row"
             >
-              <input type="number" step={perTurn} min={perTurn} value={turnBuy}
-                onChange={(e) => setTurnBuy(e.target.value)} 
+              <input type="text" value={username}
+                onChange={(e) => setUsername(e.target.value)} 
                 style={{ outline: "none",border: "none",background: "transparent",textAlign: "center"}}/>
             </div>
-            <div style={{ fontSize: 12, marginTop: 6 }}>
-              {t(turnCost + " VND/" + perTurn + " turns/day")}
+            
+            <div>{t("Password")}</div>
+            <div
+              style={{
+                width: 300,
+                height: 33,
+                border: "1px solid #B46C6C",
+                backgroundColor: "#FFF",
+                borderRadius: 50,
+                justifyContent: "center",
+                color: "#000",
+              }}
+              className="ct-flex-row"
+            >
+              <input type="password" value={password}
+                onKeyDown={(e) => {if (e.key==='Enter') onSubmit() }}
+                onChange={(e) => setPassword(e.target.value)} 
+                style={{ outline: "none",border: "none",background: "transparent",textAlign: "center"}}/>
             </div>
+            
             <button
               style={{ marginTop: 8 }}
               onClick={onSubmit}
               className="button-ok"
               disabled={disabled}
             >
-              {t("Buy")}
+              {t("Login")}
             </button>
           </div>
-          <img className="" style={{}} src={PopupOTP} />
+          <img className="" style={{}} src={PopupBGLogin} />
         </div>
       </div>
     </>
   );
 };
 
-export default PopupBuyTurn;
+export default PopupLogin;

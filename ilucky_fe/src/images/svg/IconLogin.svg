@@ -1,0 +1,20 @@
+<svg width="35" height="50" viewBox="0 0 35 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Door Outline -->
+  <rect x="5" y="5" width="20" height="30" fill="none" stroke="#F0AA2C" stroke-width="1.5"/>
+
+  <!-- Arrow pointing into the door -->
+  <path d="M23 20 L13 15 V25 Z" fill="#F0AA2C"/>
+
+  <!-- Text "Login" below the icon -->
+  <text x="17.5" y="45" font-family="Arial, sans-serif" font-size="10" fill="#F0AA2C" text-anchor="middle">Login</text>
+
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="17.5" y1="0" x2="17.5" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0.015625" stop-color="#FFE28A"/>
+      <stop offset="0.416667" stop-color="#FFE28A"/>
+      <stop offset="0.666667" stop-color="#E3930D"/>
+      <stop offset="0.942708" stop-color="#E3930D"/>
+    </linearGradient>
+  </defs>
+</svg>

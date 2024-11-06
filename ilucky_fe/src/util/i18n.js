@@ -48,7 +48,20 @@ i18n.use(initReactI18next).init({
         Logout: "Logout",
         Spins: "Spins",
         "Matching correctly": "Matching correctly",
-        PopupRegisterTitle: "Bạn chắc chắn muốn đăng ký VIP ?"
+        PopupRegisterTitle: "Are you sure assign VIP ?",
+        Dailyfree: "Dailyfree:",
+        TopPlayer: "Top Player",
+        Deposit: "Deposit",
+        OutOfTurn:"Out Of Turn",
+        BuyTurnSucceed:"Buy Turn Succeed",
+        BuyTurnFail:"Buy Turn Fail",
+        LoginSucceed:"Login Succeed",
+        LoginFail:"Login Fail",
+        RegisterSucceed:"Register Succeed",
+        RegisterFail:"Register Fail",
+        PressClickPayment:"Press Click Payment",
+        BankingCauseError:"Banking Cause Error"
+
       },
     },
     VI: {
@@ -96,7 +109,19 @@ i18n.use(initReactI18next).init({
         Spins: "Đăng xuất",
         "Matching correctly": "Kết hợp chính xác",
         Confirm: "Xác nhận",
-        PopupRegisterTitle: "Bạn chắc chắn muốn đăng ký VIP ?"
+        PopupRegisterTitle: "Bạn chắc chắn muốn đăng ký VIP ?",
+        Dailyfree: "Lượt miễn phí",
+        TopPlayer: "Xep hang nguoi choi",
+        Deposit: "Nap tien",
+        OutOfTurn:"Hết lượt quay",
+        BuyTurnSucceed:"Bạn đã mua thêm lượt thành công.",
+        BuyTurnFail:"Mua thêm lượt that bai",
+        LoginSucceed:"Dang nhap thành công.",
+        LoginFail:"Dang nhap that bai",
+        RegisterSucceed:"Dang ki thành công.",
+        RegisterFail:"Dang ki that bai",
+        PressClickPayment:"Nhan nap tien de thanh toan",
+        BankingCauseError:"Loi ngan hang"
       },
     }
 },

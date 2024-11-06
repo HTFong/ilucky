@@ -1,12 +1,18 @@
 package burundi.ilucky.service;
 
 import burundi.ilucky.model.Gift;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GiftService {
+    public static Map<String, Integer> giftPercents;
+
+    @Value("#{${giftPercent.map}}")
+    public void setGiftPercents(Map<String, Integer> giftPercentMap) {giftPercents = giftPercentMap;}
 
     public static Map<String, Gift> gifts;
 
@@ -40,12 +46,35 @@ public class GiftService {
     }
 
     public static Gift getRandomGift() {
-        List<String> keys = new ArrayList<>(gifts.keySet());
+        int randomPoint = new Random().nextInt((100 + 1) - 1) + 1;
+        Map<String, Integer> giftPercentsMap = giftPercents.entrySet().stream()
+                .filter(e -> e.getValue() != 0)
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())); // remove element with 0%
 
-        Random random = new Random();
+        int sumPercent = 0;
+        for (Map.Entry<String, Integer> entry : giftPercentsMap.entrySet()) {
+            sumPercent+= entry.getValue();
+            entry.setValue(sumPercent);
+        }
+        Map<Integer, String> giftPercentsMapInversed =
+                giftPercentsMap.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
 
-        String randomKey = keys.get(random.nextInt(keys.size()));
 
-        return gifts.get(randomKey);
+        List<Integer> percentPoints = new ArrayList<>(giftPercentsMapInversed.keySet());
+        Collections.sort(percentPoints);
+        if (randomPoint<= percentPoints.get(0)) {
+            return gifts.get(giftPercentsMapInversed.get(percentPoints.get(0)));
+        } else {
+            for (int i = 1; i < percentPoints.size(); i++) {
+                if (percentPoints.get(i-1)<randomPoint && randomPoint<= percentPoints.get(i)) {
+                    String randomKey = giftPercentsMapInversed.get(percentPoints.get(i));
+                    return gifts.get(randomKey);
+                }
+            }
+        }
+
+        return null;
     }
 }

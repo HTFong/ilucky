@@ -2,14 +2,7 @@ package burundi.ilucky.model;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "_user")
@@ -24,6 +20,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
 	@Id
@@ -37,9 +34,11 @@ public class User {
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
     private Date lastUpdate;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private Date addTime;
     
     private long totalPlay;
@@ -47,5 +46,9 @@ public class User {
     private long totalVnd;
 
     private long totalStar;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastCheckIn; // last get free turn
+
+    private int steakCount;
 
 }

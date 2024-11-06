@@ -2,6 +2,7 @@ package burundi.ilucky.service;
 
 import java.util.Arrays;
 
+import burundi.ilucky.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,31 +17,33 @@ import org.springframework.stereotype.Service;
 import burundi.ilucky.repository.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
+    @Autowired
     private UserRepository userRepository;
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		burundi.ilucky.model.User user = userRepository.findByUsername(username);
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        burundi.ilucky.model.User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResourceNotFoundException("User", "Username", username)
+        );
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        
+
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
         UserDetails userDetails = new User(user.getUsername(), user.getPassword(), Arrays.asList(grantedAuthority));
-		return userDetails;
-	}
-	
-	@Transactional
+        return userDetails;
+    }
+
+    @Transactional
     public UserDetails loadUserById(Long id) {
-		burundi.ilucky.model.User user = userRepository.findById(id).orElseThrow(
+        burundi.ilucky.model.User user = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with id : " + id)
         );
-		
+
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
-		UserDetails userDetails = new User(user.getUsername(), user.getPassword(), Arrays.asList(grantedAuthority));
+        UserDetails userDetails = new User(user.getUsername(), user.getPassword(), Arrays.asList(grantedAuthority));
         return userDetails;
     }
 

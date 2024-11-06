@@ -9,7 +9,7 @@ const MOUNT_NODE = document.getElementById("root");
 const render = () => {
   ReactDOM.render(
     <StateProvider>
-      <StrictMode>
+      <StrictMode> 
         <App />
       </StrictMode>
     </StateProvider>,

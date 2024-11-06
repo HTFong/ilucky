@@ -1,0 +1,39 @@
+<svg width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+
+
+
+
+
+
+
+
+
+
+
+<defs>
+<linearGradient id="paint0_linear_342_2393" x1="0.5001093745231628" y1="1.000028133392334" x2="0.5001093745231628" y2="0.0008459312375634909">
+<stop stop-color="#DE8B00"/>
+<stop offset="1" stop-color="#FFC75E"/>
+</linearGradient>
+<linearGradient id="paint1_linear_342_2393" x1="0.49854207038879395" y1="1.0008811950683594" x2="0.49854207038879395" y2="0.001691875047981739">
+<stop stop-color="#FFB805"/>
+<stop offset="1" stop-color="#FFE89C"/>
+</linearGradient>
+<radialGradient id="paint2_radial_342_2393" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(10.4246 5.72792) scale(26.2495)">
+<stop stop-color="#FFEEB8"/>
+<stop offset="1" stop-color="#FFBF00"/>
+</radialGradient>
+<radialGradient id="paint3_radial_342_2393" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.711 -1.17967) scale(26.4879)">
+<stop stop-color="#FFFD9E"/>
+<stop offset="1" stop-color="#FFFD9E"/>
+</radialGradient>
+<linearGradient id="paint4_linear_342_2393" x1="0.5001093745231628" y1="1.000028133392334" x2="0.5001093745231628" y2="0.0008459312375634909">
+<stop stop-color="#CF8000"/>
+<stop offset="1" stop-color="#F5B133"/>
+</linearGradient>
+<linearGradient id="paint5_linear_342_2393" x1="0.5032446384429932" y1="0.9932757019996643" x2="0.5032446384429932" y2="-0.0029551794286817312">
+<stop stop-color="#D68329"/>
+<stop offset="1" stop-color="#954B25"/>
+</linearGradient>
+</defs>
+<g class="currentLayer" style=""><title>Layer 1</title><path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C24.8553 0 32 7.14465 32 16C32 24.8553 24.8553 32 16 32C7.14465 32 0 24.8553 0 16C0 7.14465 7.14465 0 16 0Z" fill="url(#paint0_linear_342_2393)" id="svg_1"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4.22641 16C4.22641 9.45912 9.55975 4.12579 16.1006 4.12579C22.6415 4.12579 27.9748 9.45912 27.9748 16C28.5786 14.1887 31.4969 13.8868 32.1006 16C32.1006 7.14465 24.956 0 16.1006 0C7.14465 0 0 7.14465 0 16C0.704402 13.8868 3.52201 14.1887 4.22641 16Z" fill="url(#paint1_linear_342_2393)" id="svg_2"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.6981 3.92453C22.239 3.92453 27.5723 9.25786 27.5723 15.7987C27.5723 22.3396 22.239 27.673 15.6981 27.673C9.15725 27.673 3.82391 22.239 3.82391 15.6981C3.82391 9.15723 9.15725 3.92453 15.6981 3.92453Z" fill="#F7E984" id="svg_3"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.9999 4.22644C22.5408 4.22644 27.8742 9.55977 27.8742 16.1007C27.8742 22.6415 22.5408 27.9749 15.9999 27.9749C9.45906 27.9749 4.12573 22.6415 4.12573 16.1007C4.22636 9.45914 9.45906 4.22644 15.9999 4.22644Z" fill="url(#paint2_radial_342_2393)" id="svg_4" class="" transform="translate(-0.244898, -0.163265) translate(0.244898, 0.489796) translate(-0.163265, -0.163265)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.23894 22.7421L22.7421 6.239C20.8301 4.93083 18.5157 4.12579 15.9999 4.12579C14.9937 4.12579 13.9874 4.22642 12.9811 4.52831L4.52825 12.9811C4.32699 13.9874 4.12573 14.8931 4.12573 16C4.22636 18.5157 4.93076 20.8302 6.23894 22.7421Z" fill="url(#paint3_radial_342_2393)" fill-opacity="0.5" id="svg_5"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16 0.402516C24.5535 0.402516 31.5975 7.34591 31.5975 16C31.5975 24.5535 24.6541 31.5975 16 31.5975C7.44654 31.5975 0.402516 24.6541 0.402516 16C0.402516 7.44654 7.44654 0.402516 16 0.402516ZM16 0C24.8553 0 32 7.14465 32 16C32 24.8553 24.8553 32 16 32C7.14465 32 0 24.8553 0 16C0 7.14465 7.14465 0 16 0Z" fill="url(#paint4_linear_342_2393)" id="svg_7"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0.804993 12.5786C2.9182 5.83646 8.95593 1.00627 16 1.00627C23.044 1.00627 29.0817 5.83646 31.1949 12.5786C29.5849 5.6352 23.4465 0.402496 16 0.402496C8.55342 0.402496 2.41506 5.6352 0.804993 12.5786Z" fill="#F7E984" id="svg_8"/><rect fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" id="svg_14" x="8" y="10" width="6" height="0"/><rect fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" id="svg_16" x="9" y="10" width="3" height="0"/><rect fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" id="svg_17" x="8" y="14" width="4" height="0"/><foreignObject fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" font-size="100" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_40" x="49" y="42" width="1" height="8" class=""><p xmlns="http://www.w3.org/1999/xhtml">text</p></foreignObject><foreignObject fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" font-size="100" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_42" x="47" y="35" width="3" height="15" class="" transform="translate(3, 15)"><p xmlns="http://www.w3.org/1999/xhtml">text</p></foreignObject><foreignObject fill="url(#paint5_linear_342_2393)" style="color: rgb(207, 128, 0); text-align: justify;" stroke-dashoffset="" fill-rule="evenodd" font-size="9" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_51" x="48" y="12" width="14" height="10" class="" transform="translate(-0.244898, 0.897959) translate(-0.244898, 1.06122) translate(-1.14286, -1.55102) translate(0.0816327, 0.0816327) translate(-42.8571, -2.77551) translate(1.55102, -3.26531) translate(-0.0816327, -0.0816327) translate(-0.163265) translate(48, 12) scale(1.17493, 1.43265) translate(-48, -12) translate(48, 12) scale(1.23907, 1.33469) translate(-48, -12) translate(48, 12) scale(1.06414, 1.04082) translate(-48, -12) translate(48, 12) scale(0.865889, 0.934694) translate(-48, -12) translate(48, 12) scale(0.970845, 1) translate(-48, -12) translate(48, 12) scale(1.18659, 1.06531) translate(-48, -12) translate(48, 12) scale(1.20991, 1.13878) translate(-48, -12)" font-weight="bold" stroke-opacity="1" fill-opacity="0.6"><p xmlns="http://www.w3.org/1999/xhtml" style="border: none;outline: none;font-size: inherit;line-height: 1em;padding:0;margin:0;">VI</p></foreignObject><foreignObject fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" font-size="100" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_55" x="47" y="16" width="0" height="0"><p xmlns="http://www.w3.org/1999/xhtml">text</p></foreignObject><foreignObject fill="url(#paint5_linear_342_2393)" style="color: rgb(0, 0, 0);" stroke-dashoffset="" fill-rule="evenodd" font-size="100" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_57" x="52" y="16" width="1" height="0"><p xmlns="http://www.w3.org/1999/xhtml">text</p></foreignObject></g></svg>

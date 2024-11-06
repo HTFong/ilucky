@@ -1,27 +1,27 @@
 package burundi.ilucky.service;
 
+import burundi.ilucky.exception.LogicalException;
 import burundi.ilucky.model.Gift;
 import burundi.ilucky.model.LuckyHistory;
 import burundi.ilucky.model.User;
 import burundi.ilucky.model.dto.LuckyHistoryDTO;
+import burundi.ilucky.model.dto.TurnDTO;
 import burundi.ilucky.repository.LuckyHistoryRepository;
 import burundi.ilucky.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
 public class LuckyService {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
@@ -76,6 +76,18 @@ public class LuckyService {
     	}
     	
     	return luckyGiftHistoriesDTO;
+    }
+
+    public void buyTurn(UserDetails userDetails, TurnDTO turn) {
+        User user = userService.findByUserName(userDetails.getUsername());
+        long balancedAfterPayment = user.getTotalVnd() - turn.getTurnCost() * turn.getTurnBuy() / turn.getPerTurn();
+        if (balancedAfterPayment < 0) {
+            throw new LogicalException("LuckyService","buyTurn()","User out of budget");
+        }
+        user.setTotalVnd(balancedAfterPayment);
+        user.setTotalPlay(user.getTotalPlay()+turn.getTurnBuy());
+        userRepository.save(user);
+        //method save history of buy turn
     }
 
 }

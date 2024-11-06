@@ -11,8 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import burundi.ilucky.model.User;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
+    @Query(value = "FROM User u WHERE u.totalStar IN (SELECT DISTINCT u2.totalStar FROM User u2 ORDER BY u2.totalStar DESC LIMIT :topNumber) ORDER BY u.totalStar DESC")
+    List<User> findTopUsersByTotalStar(@Param("topNumber") int topNumber);
 }
